@@ -1,31 +1,21 @@
 
 import classes from './Products.module.css'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import ProductCard from './ProductCard';
+import ProductsCartContext from '../../contexts/Products-cart/ProductsCartContext';
+import type { Product } from './Products.types';
 
 
 
-interface Product {
-  category: string;
-  description: string;
-  id: number;
-  image: string;
-  price: number;
-  rating: {
-    rate: number;
-    count: number;
-  }
-  title: string;
-  IsInCart: boolean;
-}
 
 
 function ProductsList() {
 const [products, setProducts] = useState<Product[]>([])
-const [productsIdsInCart, setProductsIdsInCart] = useState<number[]>([])
 const [productsLoading, setProductsLoading] = useState<boolean>(false)
+
+const { productsIdsInCart, addProductToCart, removeProductFromCart } = useContext(ProductsCartContext)
 
 console.log(productsIdsInCart)
 console.log(products)
@@ -56,30 +46,25 @@ useEffect(() => {
 
 
 function AddToCart(id: number) {
-  const alreadyInCart = productsIdsInCart.some(productsId => productsId === id)
-  if(alreadyInCart) {
-    return
-     }
-     setProductsIdsInCart([...productsIdsInCart, id])
+  addProductToCart(id)
+     
+
 
      const foundProduct = products.find(d => d.id === id) 
       if(foundProduct) {
         foundProduct.IsInCart = true
      }
      setProducts([...products])
-
+    
 }
 
 function removeFromCart(id: number) {
-
-     setProductsIdsInCart(productsIdsInCart.filter(productId => productId !== id))
-
-     const foundProduct = products.find(d => d.id === id) 
+  removeProductFromCart(id)
+const foundProduct = products.find(d => d.id === id) 
       if(foundProduct) {
         foundProduct.IsInCart = false
      }
      setProducts([...products])
-
 }
 
 

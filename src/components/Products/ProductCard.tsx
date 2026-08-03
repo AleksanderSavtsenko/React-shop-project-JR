@@ -2,6 +2,7 @@ import { Button, Card } from "react-bootstrap"
 import { BsCartDashFill, BsCartPlusFill } from 'react-icons/bs'
 import classes from './Products.module.css'
 
+
 interface ProductCardProps {
   id: number
     title: string
