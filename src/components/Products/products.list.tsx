@@ -81,6 +81,8 @@ const foundProduct = products.find(d => d.id === id)
                 removeFromCart={removeFromCart}
                 isInCart={p.IsInCart}
                 title = {p.title}
+                price = {p.price}
+                rating = {p.rating.rate}
                 description = {p.description}
                 image = {p.image}
                 />

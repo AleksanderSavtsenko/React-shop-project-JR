@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ProductsCartContext from '../../contexts/Products-cart/ProductsCartContext';
 import type { Product } from './Products.types';
-
+import { Badge, ListGroup, Placeholder } from 'react-bootstrap';
+import classes from './Products.module.css'
 
 interface ProductsCartDrawerProps {
 open: boolean;
@@ -12,14 +13,17 @@ handleClose: () => void;
 
 
 
+
  function ProductsCartDrawer({open, handleClose}: ProductsCartDrawerProps) {
 const [cartProducts, setCartProducts] = useState <Product[]>([])
 
   const {productsIdsInCart} = useContext(ProductsCartContext)
 
+  const [productsLoading, setProductsLoading] = useState<boolean>(false)
+
 async function fetchProductsFromCart(ids: number[]) {
   try {
-
+    setProductsLoading(true)
     const promises: Promise<Response>[] = []
     const products: Product[] = []
 
@@ -43,9 +47,12 @@ for (const response1 of response) {
   catch (error) {
     console.error(error)
   }
+  finally {
+    setProductsLoading(false)
+  }
 }
-console.log(cartProducts)
 
+console.log(productsLoading)
 
 useEffect(()=> {
   if(open) {
@@ -61,15 +68,53 @@ useEffect(()=> {
           <Offcanvas.Title>Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {cartProducts.map((product)=> (
-            <div>
-              <h3>{product.title}</h3>
-              <p>Price: ${product.price}</p>
-              <img src={product.image} alt={product.title} style={{ width: '100px', height: '100px', objectFit: 'contain', cursor: 'pointer' }} />
-            </div>
-          ))}
+          <ListGroup as="ol" numbered>
+              {productsLoading && (
+                        Array.from({length: productsIdsInCart.length}).map((_, index) => (
+                            <ListGroup.Item
+                                key={index}
+                                as="li"
+                                className="d-flex justify-content-between align-items-center"
+                            >
+                                <Placeholder as="div" animation="glow" className={classes.productCartItemContentPlaceholder}>
+                                    <Placeholder xs={2} style={{ height: 60 }} />
+                                    <div style={{ width: '60%' }} >
+                                        <Placeholder style={{ marginBottom: 4, height: 30 }} xs={12} />
+                                        <Placeholder style={{ height: 20 }} xs={12} />
+                                    </div>
+                                </Placeholder>
+                                <Placeholder as="div" animation="glow" style={{ width: 20 }} >
+                                    <Placeholder xs={12} />
+                                </Placeholder>
+                            </ListGroup.Item>
+                        ))
+                    )}
+                    {!productsLoading && cartProducts.map((product, index) => (
+                        <ListGroup.Item
+                            key={index}
+                            as="li"
+                            className="d-flex justify-content-between align-items-center"
+                      
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <div className={classes.productCartItemContent}>
+                                <img className = {classes.productCartItemImage} src = {product.image} alt = {product.title} />
+                                <div className="ms-2 me-auto">
+                                    <div className={classes.productCartItemTitle}>{product.title}</div>
+                                    <span className={classes.productCartItemPrice}>${product?.price}</span>
+                                </div>
+                            </div>
+                            <Badge bg="primary" pill>
+                                1
+                            </Badge>
+                        </ListGroup.Item>
+                    ))}
+
+          
+      </ListGroup>
         </Offcanvas.Body>
       </Offcanvas>
+      
   );
 }
 export default ProductsCartDrawer;

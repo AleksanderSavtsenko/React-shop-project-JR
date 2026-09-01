@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .cardButton {
@@ -25,6 +26,7 @@
     align-items: center; 
     gap: 10px;
     justify-content: center;
+    margin-top: 5px;
 }
 
 .spinnerContainer {
@@ -47,4 +49,58 @@
    -webkit-line-clamp: 2;
            line-clamp: 2; 
    -webkit-box-orient: vertical;
+}
+
+.productCartItemConent {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-inline: 10px;
+}
+
+.productCartItemImage {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.productCartItemPrice {
+    font-weight: 600;
+    color:chocolate;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+.cardPriceAndRating {
+   display: flex;
+   gap: 10px;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.cardPrice {
+    font-weight: 700;
+    color:chocolate;
+    align-self: start;
+    font-size: 1.4rem;
+    
+    
+    
+}
+
+.cartProductCartItemTitle {
+    overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 3;
+           line-clamp: 3; 
+   -webkit-box-orient: vertical;
+   font-weight: 600;
+}
+
+.productCartItemContentPlaceholder {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }

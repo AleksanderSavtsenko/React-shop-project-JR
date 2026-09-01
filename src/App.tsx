@@ -1,3 +1,4 @@
+import '@smastrom/react-rating/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import Header from './components/Header.tsx'
