@@ -2,6 +2,7 @@ import { Button, Card } from "react-bootstrap"
 import { BsCartDashFill, BsCartPlusFill } from 'react-icons/bs'
 import classes from './Products.module.css'
 import { Rating } from "@smastrom/react-rating"
+import { useNavigate } from "react-router"
 
 
 
@@ -20,9 +21,13 @@ interface ProductCardProps {
 
 function ProductCard({id, title, description, image, addToCart, isInCart, removeFromCart, price, rating}: ProductCardProps) {
 
+const navigate= useNavigate()
+  function openDetailsPage() {
+    navigate(`/product-details/${id}`)
+}
 return (
 
-               <Card>
+               <Card style = {{cursor: 'pointer'}}onClick={openDetailsPage}>
       <Card.Img style = {{ padding: '10', height: 300, objectFit: 'contain' }} variant="top" src={image} />
       <Card.Body className = {classes.cardBody}>
         <Card.Title className = {classes.cardTitle}>{title}</Card.Title>
@@ -35,18 +40,25 @@ return (
     <div className = {classes.cardPriceAndRating}>
          <span className={classes.cardPrice}> ${price}
         </span>
+        <span className={classes.cardPriceFake}>
+          $ {price * 1.5}
+          </span>
 
-        <Rating
+       
+    </div>
+       <Rating
       style={{ maxWidth: 120 }}
       value={rating ||4.5}
       readOnly
       />
-    </div>
        
         {isInCart 
         ?
         <Button
-        onClick={() => removeFromCart(id)}
+        onClick={(event) => {
+          event.stopPropagation()
+          removeFromCart(id)
+        }}
         className = {classes.cardButton} 
         variant="danger" >
           <BsCartDashFill />Remove from Cart</Button>
@@ -55,7 +67,9 @@ return (
 
         className = {classes.cardButton}
         variant="primary" 
-        onClick={() => addToCart(id)}>
+        onClick={(event) => {event.stopPropagation()
+addToCart(id)
+}}>
           <BsCartPlusFill />Add to Cart</Button>
 }
   </div>

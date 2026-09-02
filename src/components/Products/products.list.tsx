@@ -28,7 +28,7 @@ async function fetchProducts() {
   try {
     const response = await fetch('https://fakestoreapi.com/products')
     const data = await response.json() as Product[]
-    setProducts(data.map(d => ({ ...d, IsInCart: false })))
+    setProducts(data.map(d => ({ ...d, IsInCart: productsIdsInCart.includes(d.id) })))
   }
   catch (error) {
     console.error('Error fetching products:', error)

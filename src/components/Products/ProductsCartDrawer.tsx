@@ -101,7 +101,7 @@ useEffect(()=> {
                                 <img className = {classes.productCartItemImage} src = {product.image} alt = {product.title} />
                                 <div className="ms-2 me-auto">
                                     <div className={classes.productCartItemTitle}>{product.title}</div>
-                                    <span className={classes.productCartItemPrice}>${product?.price}</span>
+                                    <span className={classes.productCartItemPrice}>${product?.price} <span className={classes.productCartItemPriceFake}>${product?.price * 1.5}</span></span>
                                 </div>
                             </div>
                             <Badge bg="primary" pill>
