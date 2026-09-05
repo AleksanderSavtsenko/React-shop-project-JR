@@ -1,6 +1,6 @@
 import ProductsCartContext from './ProductsCartContext.tsx'
 import {type ReactNode, type JSX, useState} from 'react'
-import StorageService from '../../storage/storageService.ts';
+import StorageService from '../../services/storageService.ts';
 interface productsCartProviderProps {
     children: ReactNode | JSX.Element;
 }

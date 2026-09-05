@@ -19,6 +19,10 @@ function openHomePage() {
   navigate('/')
 }
 
+function goToSignInPage() {
+  navigate('/sign-in')
+}
+
   const { productsIdsInCart } = useContext(ProductsCartContext)
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -29,11 +33,13 @@ function openHomePage() {
           <Nav className="me-auto">
           </Nav>
           <Nav>
+            
              <Button className = {classes.cartButton} onClick = {OpenCartDrawer} variant="outline-primary"><BsCartCheckFill size = '20' />
              <Badge className = {classes.badge} pill bg="success">
         {productsIdsInCart.length}
       </Badge>
              </Button>
+             <Button variant = 'primary' onClick ={goToSignInPage}>Sign in</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

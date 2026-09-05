@@ -3,6 +3,7 @@ import {createBrowserRouter} from 'react-router';
 import ProductsPage from './pages/products/productsPage.tsx'
 
 import ProductDetailsPage from './pages/products-details/ProductDetailsPage.tsx';
+import SignInPage from './pages/sign-in/SignInPage.tsx';
 
 const router = createBrowserRouter([
     {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/product-details/:id',
-        element: <ProductDetailsPage/>
+        element: <ProductDetailsPage/> 
+    },
+    {
+        path: '/sign-in',
+        element: <SignInPage/>
     }
 ]);
 
