@@ -41,7 +41,7 @@ return (
          <span className={classes.cardPrice}> ${price}
         </span>
         <span className={classes.cardPriceFake}>
-          $ {price * 1.5}
+          $ {(price * 1.5).toFixed(2)}
           </span>
 
        
@@ -68,15 +68,15 @@ return (
         className = {classes.cardButton}
         variant="primary" 
         onClick={(event) => {event.stopPropagation()
-addToCart(id)
-}}>
+      addToCart(id)
+   }}>
           <BsCartPlusFill />Add to Cart</Button>
-}
+  }
   </div>
     
       </Card.Body>
     </Card>
   
-)
-}
+   )
+  }
 export default ProductCard

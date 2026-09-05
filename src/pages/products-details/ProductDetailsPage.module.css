@@ -1,0 +1,94 @@
+.image {
+object-fit: contain;
+height: 300px;
+}
+
+
+.card {
+max-width: 800px;
+margin-inline: auto;
+}
+
+
+.priceAndRatingContainer{
+
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-style: italic;
+    color: rgb(62, 16, 189);
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.cardBody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    margin: 0
+
+}
+
+.fakePrice {
+display: flex;
+    font-weight: 600;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: black;
+    text-decoration: line-through;
+    margin-left: 10px;
+}
+
+.ratingContainer {
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.ratingCount {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+
+.priceDivider {
+    width: 100%;
+    border-top: 1px solid rgb(62, 16, 189);
+}
+
+.cardSkeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.productNotFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
+}

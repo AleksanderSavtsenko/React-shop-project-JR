@@ -4,6 +4,7 @@ import ProductsCartContext from '../../contexts/Products-cart/ProductsCartContex
 import type { Product } from './Products.types';
 import { Badge, ListGroup, Placeholder } from 'react-bootstrap';
 import classes from './Products.module.css'
+import { useNavigate } from 'react-router';
 
 interface ProductsCartDrawerProps {
 open: boolean;
@@ -16,7 +17,7 @@ handleClose: () => void;
 
  function ProductsCartDrawer({open, handleClose}: ProductsCartDrawerProps) {
 const [cartProducts, setCartProducts] = useState <Product[]>([])
-
+const navigate = useNavigate()
   const {productsIdsInCart} = useContext(ProductsCartContext)
 
   const [productsLoading, setProductsLoading] = useState<boolean>(false)
@@ -52,7 +53,9 @@ for (const response1 of response) {
   }
 }
 
-console.log(productsLoading)
+function goToDetailsPage(id: number) {
+navigate(`/product-details/${id}`)
+}
 
 useEffect(()=> {
   if(open) {
@@ -65,7 +68,7 @@ useEffect(()=> {
   return (
       <Offcanvas show={open} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Cart</Offcanvas.Title>
+          <Offcanvas.Title>Products Cart</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ListGroup as="ol" numbered>
@@ -94,6 +97,7 @@ useEffect(()=> {
                             key={index}
                             as="li"
                             className="d-flex justify-content-between align-items-center"
+                            onClick={()=> goToDetailsPage(product.id)}
                       
                             style={{ cursor: 'pointer' }}
                         >
@@ -101,7 +105,7 @@ useEffect(()=> {
                                 <img className = {classes.productCartItemImage} src = {product.image} alt = {product.title} />
                                 <div className="ms-2 me-auto">
                                     <div className={classes.productCartItemTitle}>{product.title}</div>
-                                    <span className={classes.productCartItemPrice}>${product?.price} <span className={classes.productCartItemPriceFake}>${product?.price * 1.5}</span></span>
+                                    <span className={classes.productCartItemPrice}>${product?.price} <span className={classes.productCartItemPriceFake}>${(product?.price * 1.5).toFixed(2)}</span></span>
                                 </div>
                             </div>
                             <Badge bg="primary" pill>
