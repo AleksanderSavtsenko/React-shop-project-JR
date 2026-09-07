@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout"
 import Form from 'react-bootstrap/Form';
 import classes from './SignInPage.module.css'
 import {useEffect, useState, type ChangeEvent} from "react";
+import CustomPassword from "../../shared/ui/CustomPassword";
 
 
 interface formValues {
@@ -82,11 +83,13 @@ useEffect(() => {
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" value = {formValues.password}onChange = {changePasswordValue} isInvalid = {Boolean(formErrors.password)} />
-      <Form.Control.Feedback type="invalid">
-              {formErrors.password}
-            </Form.Control.Feedback>
-      </Form.Group>
+        <CustomPassword  placeholder="Password" value = {formValues.password}onChange = {changePasswordValue} isInvalid = {Boolean(formErrors.password)}>
+
+         <Form.Control.Feedback type="invalid">
+      {formErrors.password}
+    </Form.Control.Feedback>
+  </CustomPassword>
+</Form.Group>
       <Button variant="primary" type="submit">
         Submit
       </Button>
