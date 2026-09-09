@@ -1,0 +1,9 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 600px;
+    width: 100%;
+    flex: 1;
+    margin-inline: auto;
+}
