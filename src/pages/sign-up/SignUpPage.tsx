@@ -6,6 +6,7 @@ import classes from './SignUpPage.module.css'
 import CustomPassword from "../../shared/ui/CustomPassword";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import { useNavigate } from "react-router";
 
 
 const LoginFormSchema = Yup.object().shape({
@@ -56,6 +57,10 @@ function SignUpPage() {
     validateOnBlur: true
 })
 
+const navigate = useNavigate()
+function goToSignInPage() {
+  navigate('/sign-in')
+}
 
 
     return (
@@ -84,7 +89,7 @@ function SignUpPage() {
 
       <Form.Group onBlur = {handleBlur} className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
-        <Form.Control id = 'email' type="email" placeholder="Enter email" value = {values.email} onChange = {handleChange} isInvalid = {Boolean(errors.email)} />
+        <Form.Control type="email" placeholder="Enter email" value = {values.email} onChange = {handleChange} isInvalid = {Boolean(errors.email)} />
     <Form.Control.Feedback type="invalid">
               {errors.email}
             </Form.Control.Feedback>
@@ -93,7 +98,7 @@ function SignUpPage() {
 
       <Form.Group onBlur = {handleBlur} className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
-        <CustomPassword id = 'password' placeholder="Password" value = {values.password}onChange = {handleChange} isInvalid = {Boolean(errors.password)}>
+        <CustomPassword  placeholder="Password" value = {values.password}onChange = {handleChange} isInvalid = {Boolean(errors.password)}>
 
          <Form.Control.Feedback type="invalid">
       {errors.password}
@@ -103,7 +108,7 @@ function SignUpPage() {
 
          <Form.Group onBlur = {handleBlur} className="mb-3" controlId="confirmPassword">
         <Form.Label>Confirm Password</Form.Label>
-        <CustomPassword id = 'confirmPassword' placeholder="Confirm Password" value = {values.confirmPassword}onChange = {handleChange} isInvalid = {Boolean(errors.confirmPassword)}>
+        <CustomPassword placeholder="Confirm Password" value = {values.confirmPassword}onChange = {handleChange} isInvalid = {Boolean(errors.confirmPassword)}>
 
          <Form.Control.Feedback type="invalid">
       {errors.confirmPassword}
@@ -113,10 +118,10 @@ function SignUpPage() {
 
 
 
-
       <Button disabled = {!isValid || !dirty} variant="primary" type="submit">
         Submit
       </Button>
+      <Button onClick ={goToSignInPage} variant = 'link'>Already have an account?</Button>
     </Form>
     </div>
         </MainLayout>

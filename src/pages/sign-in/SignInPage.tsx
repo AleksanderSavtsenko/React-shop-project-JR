@@ -6,6 +6,8 @@ import classes from './SignInPage.module.css'
 import CustomPassword from "../../shared/ui/CustomPassword";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 
 const LoginFormSchema = Yup.object().shape({
@@ -34,6 +36,17 @@ function SignInPage() {
     validateOnBlur: true
 })
 
+const navigate = useNavigate()
+
+function gotoSignUpPage() {
+  navigate('/sign-up')
+}
+
+
+
+useEffect(()=> {
+  import('../../pages/products/productsPage.tsx')
+},[])
 
 
     return (
@@ -62,6 +75,7 @@ function SignInPage() {
       <Button disabled = {!isValid || !dirty} variant="primary" type="submit">
         Submit
       </Button>
+      <Button onClick ={gotoSignUpPage} variant = 'link'>Don't have an account?</Button>
     </Form>
     </div>
         </MainLayout>

@@ -1,36 +1,22 @@
 import {useParams} from "react-router"
-import type { Product } from "../../components/Products/Products.types"
-import { useContext, useEffect, useState } from "react"
+
+import { useContext } from "react"
 import { Button, Card, Placeholder } from "react-bootstrap"
 import MainLayout from "../../layouts/MainLayout"
 import classes from './ProductDetailsPage.module.css'
 import { Rating } from "@smastrom/react-rating"
 import ProductsCartContext from "../../contexts/Products-cart/ProductsCartContext"
 import { BsCartDashFill, BsCartPlusFill } from "react-icons/bs"
+import useGetProductByIdQuery from "../../queries/products/useGetProductByIdQuery"
 
 function ProductDetailsPage() {
-  const [product, setProduct] = useState<Product>()
-  const [loading, setLoading] = useState<boolean>(true)
+
   const{productsIdsInCart, addProductToCart, removeProductFromCart} = useContext(ProductsCartContext)
     const { id } = useParams()
+    const {} = useGetProductByIdQuery(id)
+    const { data: product, isLoading: loading } = useGetProductByIdQuery(id)
+    
 
-
-async function fetchProduct(id: string)  {
-    try {
-      setLoading(true)
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`)
-        const data = await response.json() as Product
-       setProduct(data)
-        
-    }
-
-    catch (error) {
-        console.error(error)
-    }
-    finally {
-      setLoading(false)
-    }
-}
 
 const isInCart = product
   ? productsIdsInCart.includes(product.id)
@@ -48,13 +34,6 @@ function addToCart(id: number | undefined) {
     
   }
 }
-
-
-useEffect(()=> {
-   if(id) {
-     void fetchProduct(id)
-   }
-}, [id])
 
 
 
@@ -87,10 +66,10 @@ useEffect(()=> {
               <span className = {classes.price}>${product?.price}</span>   
               <span className = {classes.fakePrice}>${product?.price ? (product.price * 1.5).toFixed(2) : ''}</span>
               </Card.Text>
-             <Card.Text className = {classes.ratingContainer}>  
+             <Card.Text as="div" className = {classes.ratingContainer}>  
                <Rating
                     style={{ maxWidth: 120 }}
-                    value={product?.rating.rate || 0}
+                    value={product?.rating?.rate || 0}
                     readOnly/>
 
                     <span className = {classes.ratingCount}>({product?.rating?.count})</span>

@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ProductsCartContext from '../../contexts/Products-cart/ProductsCartContext';
-import type { Product } from './Products.types';
+
 import { Badge, ListGroup, Placeholder } from 'react-bootstrap';
 import classes from './Products.module.css'
 import { useNavigate } from 'react-router';
+
+import useGetProductsByIdsQuery from '../../queries/products/useGetProductsByIdsQuery';
 
 interface ProductsCartDrawerProps {
 open: boolean;
@@ -16,53 +18,22 @@ handleClose: () => void;
 
 
  function ProductsCartDrawer({open, handleClose}: ProductsCartDrawerProps) {
-const [cartProducts, setCartProducts] = useState <Product[]>([])
 const navigate = useNavigate()
   const {productsIdsInCart} = useContext(ProductsCartContext)
 
-  const [productsLoading, setProductsLoading] = useState<boolean>(false)
-
-async function fetchProductsFromCart(ids: number[]) {
-  try {
-    setProductsLoading(true)
-    const promises: Promise<Response>[] = []
-    const products: Product[] = []
 
 
-    ids.forEach((id)=> {
-      promises.push(fetch(`https://fakestoreapi.com/products/${id}`))
-    })
-
-    
-  await Promise.all(promises).then(async(response) => {
-for (const response1 of response) {
-  const data = await response1.json()
-  products.push(data as Product)
-}
-  })
+   const cartProductsQueries = useGetProductsByIdsQuery(productsIdsInCart, open)
 
 
+  const cartProducts =cartProductsQueries.map((q) => q.data)
+  const productsLoading = cartProductsQueries.some((q) => q.isLoading)
 
-    setCartProducts(products)
-  }
-  catch (error) {
-    console.error(error)
-  }
-  finally {
-    setProductsLoading(false)
-  }
-}
 
 function goToDetailsPage(id: number) {
 navigate(`/product-details/${id}`)
 }
 
-useEffect(()=> {
-  if(open) {
-    void fetchProductsFromCart(productsIdsInCart)
-
-  }
-}, [productsIdsInCart, open])
 
 
   return (
@@ -102,15 +73,15 @@ useEffect(()=> {
                             style={{ cursor: 'pointer' }}
                         >
                             <div className={classes.productCartItemContent}>
-                                <img className = {classes.productCartItemImage} src = {product.image} alt = {product.title} />
+                                <img className = {classes.productCartItemImage} src = {product?.image} alt = {product?.title} />
                                 <div className="ms-2 me-auto">
-                                    <div className={classes.productCartItemTitle}>{product.title}</div>
-                                    <span className={classes.productCartItemPrice}>${product?.price} <span className={classes.productCartItemPriceFake}>${(product?.price * 1.5).toFixed(2)}</span></span>
+                                    <div className={classes.productCartItemTitle}>{product?.title}</div>
+                                    <span className={classes.productCartItemPrice}>${product?.price} <span className={classes.productCartItemPriceFake}>${(product?.price ? product.price * 1.5 : 0).toFixed(2)}</span></span>
                                 </div>
                             </div>
                             <Badge bg="primary" pill>
                                 1
-                            </Badge>
+                            </Badge> 
                         </ListGroup.Item>
                     ))}
 

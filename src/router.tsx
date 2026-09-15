@@ -1,15 +1,16 @@
 import {createBrowserRouter} from 'react-router';
 
-import ProductsPage from './pages/products/productsPage.tsx'
+
 
 import ProductDetailsPage from './pages/products-details/ProductDetailsPage.tsx';
 import SignInPage from './pages/sign-in/SignInPage.tsx';
 import SignUpPage from './pages/sign-up/SignUpPage.tsx';
+import { ProductsPageLazy } from './lazyRoutes.ts';
 
 const router = createBrowserRouter([
     {
     path: '/',
-    element: <ProductsPage/>
+    element: <ProductsPageLazy/>
     },
     {
         path: '/product-details/:id',

@@ -23,11 +23,17 @@ function goToSignInPage() {
   navigate('/sign-in')
 }
 
+
+function loadProductsPage() {
+  import('../pages/products/productsPage.tsx')
+}
+
+
   const { productsIdsInCart } = useContext(ProductsCartContext)
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand onClick={openHomePage} style = {{cursor: 'pointer'}}>React.Shop</Navbar.Brand>
+        <Navbar.Brand onMouseEnter={loadProductsPage} onClick={openHomePage} style = {{cursor: 'pointer'}}>React.Shop</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
